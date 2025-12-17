@@ -1,0 +1,13 @@
+# --- Dados Sensíveis e Runtime ---
+# Contém o banco de dados SQLite, logs e chaves do Nginx
+data/
+
+# Contém seus certificados SSL e chaves privadas (PERIGO DE SEGURANÇA)
+letsencrypt/
+
+# --- Lixo de Sistema Operacional ---
+.DS_Store
+Thumbs.db
+
+# --- Opcional: Logs do Docker (se estiverem na pasta) ---
+*.log

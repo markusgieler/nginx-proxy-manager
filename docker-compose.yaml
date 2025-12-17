@@ -1,0 +1,41 @@
+services:
+  nginx-proxy-manager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: i-nginx-proxy-manager
+    container_name: c-nginx-proxy-manager
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    
+    networks:
+      - proxy-net
+
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+
+    healthcheck:
+      test: ["CMD", "/bin/check-health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # labels:
+    # com.gieler.description: "Reverse proxy para todos os serviços"
+    # com.gieler.environment: "production"
+
+networks:
+  proxy-net:
+    name: proxy-net
+    external: true
